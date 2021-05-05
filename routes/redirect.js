@@ -34,7 +34,6 @@ router.get('/:code', async (req, res) => {
              deviceType:getDeviceType(req.useragent)
             })
             .save()
-       // console.log("deviceType " , getDeviceType(req.useragent));
         const urlResult = url.updateOne({$inc:{visitCount:1}}).exec()
         return res.redirect(url.longURL);
          
@@ -44,12 +43,10 @@ router.get('/:code', async (req, res) => {
         }
     } catch (err) {
         console.error(err.message);
-       // res.status(500).json('Server Error');
     }
 });
 
 const getDeviceType = userAgent =>{
-    //console.log("userAgent",userAgent);
     switch (true) {
         case userAgent.isMobile:
             return "Mobile"
