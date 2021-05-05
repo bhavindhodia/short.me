@@ -1,14 +1,11 @@
-const { response } = require('express');
 const express = require('express');
 const router = express.Router();
 const { isWebUri } = require('valid-url')
-
-const config = require('config');
-const baseUrl = config.get('baseURI');
-
 const urlSchema = require("../models/UrlSchema");
 const campaingSchema = require('../models/CampaingSchema');
 const { Types } = require('mongoose');
+require('dotenv').config()
+const baseUrl = process.env.BASE_URI
 
 router.delete('/',async(req,res) =>{
     if (isWebUri(baseUrl)) {

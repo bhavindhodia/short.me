@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
-const config = require('config'); 
+require('dotenv').config()
 
-const dbURI = config.get("mongouri")
-// Function to Connect MongoDB
 const connectDB = async () => {
     
     try {
-        await mongoose.connect(dbURI, {
+        await mongoose.connect(process.env.MONGODB_URI, {
             useNewUrlParser: true,
             useCreateIndex: true,
             useFindAndModify: false,

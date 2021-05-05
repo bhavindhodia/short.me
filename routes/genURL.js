@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { nanoid } = require('nanoid')
-const config = require('config');
+require('dotenv').config()
 const urlSchema = require("../models/UrlSchema");
 const campaingSchema = require("../models/CampaingSchema");
-const baseUrl = config.get('baseURI');
+
 const { isUri } = require('valid-url');
 const UrlDataSchema = require('../models/UrlDataSchema');
 const {errorHandler} = require('../middlewares/errorHandler');
@@ -26,7 +26,7 @@ router.post('/',async(req,res) =>{
     
             const campaing = await campaingSchema.findById(campaingID)
             const urlCode = nanoid(6)
-            const shortURL = baseUrl+urlCode
+            const shortURL = process.env.BASE_URI+urlCode
 
             // CREATE NEW URL SCHEMA
         //?? Add to URL List
@@ -42,10 +42,7 @@ router.post('/',async(req,res) =>{
             await campaing.alias.push(saveToUrl._id) 
 
         //?? Create URLData Schema for that URL
-/*            const saveToUrlData= await new UrlDataSchema({
-                urlID:saveToUrl._id,
-                browser:'',
-            }) */
+
             
             const campaingResult = await campaing.save()
             const saveToUrlResult = await saveToUrl.save()

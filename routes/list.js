@@ -1,19 +1,17 @@
 const { response } = require('express');
 const express = require('express');
 const router = express.Router();
-
-const config = require('config');
-const baseUrl = config.get('baseURI');
+require("dotenv").config()
 
 const urlSchema = require("../models/UrlSchema");
 const campaingSchema= require('../models/CampaingSchema')
 const { NO_CAMPAING} = require('../errorCode');
 const {Types} = require("mongoose");
 const {isWebUri} = require('valid-url')
-
+const baseUrl = process.env.BASE_URI
 
 router.get('/',async(req,res) =>{
-    console.log("base",baseUrl);
+    
     if (isWebUri(baseUrl)) {
         const { current = 1, pageSize = 10 } = req.query;
     
